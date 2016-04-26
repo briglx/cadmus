@@ -1,0 +1,31 @@
+
+
+.text-preview {
+
+
+    font-size: 18px;
+    line-height: 13px;
+    font-family: 'Lora, serif';
+}
+
+ p{
+ 	
+	text-align: left;
+} 
+
+.text-preview .paragraph {
+	text-indent: 50px;
+}
+
+.text-preview span {
+	padding: 0 4px;
+	box-sizing: border-box;
+}
+
+.text-preview .active {
+	border: 1px solid red;
+}
+
+.text-preview .selected {
+	background-color: rgba(138, 0,0,0.5)
+}
