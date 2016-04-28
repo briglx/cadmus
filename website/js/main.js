@@ -1,6 +1,13 @@
 
 $(function(){
 
+	var filename = "WIN_20160403_15_16_53_Pro"
+	var libPath = "..\\lib\\"
+	var dataPath = "..\\data\\"
+	var rawDataPath = dataPath + "raw_images\\"
+	var cropDataPath = dataPath + "crop_images\\"
+	var textDataPath = dataPath + "ocr_output\\"
+	var filePath = rawDataPath  + filename + ".jpg"
 	
 
 	var imageName = "WIN_20160403_15_16_53_Pro";
@@ -9,7 +16,7 @@ $(function(){
 	var imageExtention = "jpg"
 	var flagCount = 0;
 
-	var imagePath = imageName + "-" + imageHand + imageVersion + "." + imageExtention
+	var imagePath =  imageName + "-" + imageHand + imageVersion + "." + imageExtention
 
 
 	$(".text-preview").on("mouseover", "span", function(){
@@ -65,11 +72,11 @@ $(function(){
 
 		$(".viewer-content .img").attr(
 		    'src',
-		    "../" + imageName
+		    cropDataPath + imageName
 		);
 
 		$.ajax({
-		  url: "../" + imageName + ".out.txt",
+		  url: textDataPath + imageName + ".out.txt",
 		  context: document.body
 		}).done(function(data) {
 
