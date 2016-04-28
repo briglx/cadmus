@@ -1,6 +1,16 @@
 
 $(function(){
 
+	
+
+	var imageName = "WIN_20160403_15_16_53_Pro";
+	var imageHand = "l"
+	var imageVersion = 0;
+	var imageExtention = "jpg"
+	var flagCount = 0;
+
+	var imagePath = imageName + "-" + imageHand + imageVersion + "." + imageExtention
+
 
 	$(".text-preview").on("mouseover", "span", function(){
 
@@ -10,69 +20,106 @@ $(function(){
 
 	})
 
+	$(".btn.prev").on("click", function(){
+
+
+		imageVersion = imageVersion - 1 ;
+		imagePath = imageName + "-" + imageHand + imageVersion + "." + imageExtention
+
+		loadImage(imagePath);
+
+	})
+
+	$(".btn.next").on("click", function(){
+
+		imageVersion = imageVersion + 1 ;
+		imagePath = imageName + "-" + imageHand + imageVersion + "." + imageExtention
+
+		loadImage(imagePath);
+		
+	})
+
+	$(".text-preview").on("mouseover", "span", function(){
+
+		$(".text-preview span").removeClass("active");
+
+		$(this).addClass("active");
+
+	})
+
+	
+
 	$(".text-preview").on("click", "span", function(){
 
 		
 		$(this).toggleClass("selected");
 
+		$(".flagged .badge").text($(".text-preview .selected").size())
+
 	})
 
 
-	var imageName = "l-1.jpg";
+	var loadImage = function(imageName){
 
-	$.ajax({
-	  url: "../" + imageName + ".out.txt",
-	  context: document.body
-	}).done(function(data) {
+		$(".img-title").html(imageName)
 
-		var items = data.split("\n");
-		
-		var isNewParagraph = false
+		$(".viewer-content .img").attr(
+		    'src',
+		    "../" + imageName
+		);
 
-		for (var i = 0; i < items.length; i++) {
-
-			var line = items[i];
-
-
-			if(line.length > 0){
-
-				var p=  $("<p>")
-				if(isNewParagraph){
-					p.addClass("paragraph");
-				}
-
-				// Split each word
-
-				var words = line.split(" ");
-				for (var j = 0; j < words.length; j++) {
-
-					var w=  $("<span>")
-
-					w.append(words[j]);
-					p.append(w);
-					
-				}
+		$.ajax({
+		  url: "../" + imageName + ".out.txt",
+		  context: document.body
+		}).done(function(data) {
 
 
+			$(".text-preview").empty()
 
-
-				$(".text-preview").append(p)
-				isNewParagraph = false;
-			}
-			else {
-				isNewParagraph = true;
-			}
+			var items = data.split("\n");
 			
-		   
-		}
+			var isNewParagraph = false
+
+			for (var i = 0; i < items.length; i++) {
+
+				var line = items[i];
 
 
-		
+				if(line.length > 0){
 
+					var p=  $("<p>")
+					if(isNewParagraph){
+						p.addClass("paragraph");
+					}
 
-		
-	});
+					// Split each word
 
+					var words = line.split(" ");
+					for (var j = 0; j < words.length; j++) {
+
+						var w=  $("<span>")
+
+						w.append(words[j]);
+						p.append(w);
+						
+					}
+
+					$(".text-preview").append(p)
+					isNewParagraph = false;
+
+				}
+				else {
+					isNewParagraph = true;
+				}  
+			}
+
+		});
+
+	}
+
+	
+
+	loadImage(imagePath)
 
 	
 
